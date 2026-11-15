@@ -15,8 +15,11 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     private String address;
 
@@ -25,8 +28,9 @@ public class Customer {
     protected Customer() {
     }
 
-    public Customer(String fullName, String address, String phone) {
-        this.fullName = fullName;
+    public Customer(CustomerName name, String address, String phone) {
+        this.firstName = name.firstName();
+        this.lastName = name.lastName();
         this.address = address;
         this.phone = phone;
     }
@@ -35,8 +39,16 @@ public class Customer {
         return id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public String getFullName() {
-        return fullName;
+        return new CustomerName(firstName, lastName).fullName();
     }
 
     public String getAddress() {
